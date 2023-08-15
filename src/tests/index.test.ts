@@ -21,8 +21,8 @@ describe('camelcaseKeys', () => {
             batter: [
               { id: '1001', type_name: 'Regular' },
               { id: '1002', type_name: 'Chocolate' },
-              { id: '1003', type_name: 'Blueberry' },
-              { id: '1004', type_name: "Devil's Food" }
+              { id: '1003', 'type-name': 'Blueberry' },
+              { id: '1004', 'type-name': "Devil's Food" }
             ]
           },
           topping_name: [

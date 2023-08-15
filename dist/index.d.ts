@@ -1,6 +1,5 @@
 type Options = {
     readonly deep?: boolean;
-    readonly exclude?: ReadonlyArray<string | RegExp>;
     readonly stopPaths?: readonly string[];
     readonly pascalCase?: boolean;
 };

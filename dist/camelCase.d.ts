@@ -1,1 +1,1 @@
-export default function camelCase(input: any, options?: any): string;
+export default function camelCase(input: string | string[], options?: any): string;

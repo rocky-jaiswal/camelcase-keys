@@ -72,28 +72,31 @@ function camelCase(input, options = {}) {
     if (input.length === 0) {
         return '';
     }
+    let strInput = input;
     const toLowerCase = options.locale === false
         ? (string) => string.toLowerCase()
         : (string) => string.toLocaleLowerCase(options.locale);
     const toUpperCase = options.locale === false
         ? (string) => string.toUpperCase()
         : (string) => string.toLocaleUpperCase(options.locale);
-    if (input.length === 1) {
-        if (SEPARATORS.test(input)) {
+    if (strInput.length === 1) {
+        if (SEPARATORS.test(strInput)) {
             return '';
         }
-        return options.pascalCase ? toUpperCase(input) : toLowerCase(input);
+        return options.pascalCase ? toUpperCase(strInput) : toLowerCase(strInput);
     }
-    const hasUpperCase = input !== toLowerCase(input);
+    const hasUpperCase = strInput !== toLowerCase(strInput);
     if (hasUpperCase) {
-        input = preserveCamelCase(input, toLowerCase, toUpperCase, options.preserveConsecutiveUppercase);
+        input = preserveCamelCase(strInput, toLowerCase, toUpperCase, options.preserveConsecutiveUppercase);
     }
-    input = input.replace(LEADING_SEPARATORS, '');
-    input = options.preserveConsecutiveUppercase ? preserveConsecutiveUppercase(input, toLowerCase) : toLowerCase(input);
+    strInput = strInput.replace(LEADING_SEPARATORS, '');
+    strInput = options.preserveConsecutiveUppercase
+        ? preserveConsecutiveUppercase(strInput, toLowerCase)
+        : toLowerCase(strInput);
     if (options.pascalCase) {
-        input = toUpperCase(input.charAt(0)) + input.slice(1);
+        input = toUpperCase(strInput.charAt(0)) + strInput.slice(1);
     }
-    return postProcess(input, toUpperCase);
+    return postProcess(strInput, toUpperCase);
 }
 exports.default = camelCase;
 //# sourceMappingURL=camelCase.js.map

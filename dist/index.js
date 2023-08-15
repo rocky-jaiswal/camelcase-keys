@@ -5,13 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const map_obj_1 = __importDefault(require("map-obj"));
 const camelCase_1 = __importDefault(require("./camelCase"));
-const has = (array, key) => array.some((element) => {
-    if (typeof element === 'string') {
-        return element === key;
-    }
-    element.lastIndex = 0;
-    return element.test(key);
-});
 // Reproduces behavior from `map-obj`.
 const isObject = (value) => typeof value === 'object' &&
     value !== null &&
@@ -22,7 +15,7 @@ const transform = (input, options = {}) => {
     if (!isObject(input)) {
         return input;
     }
-    const { exclude, pascalCase = false, stopPaths, deep = false } = options;
+    const { pascalCase = false, stopPaths, deep = false } = options;
     const stopPathsSet = new Set(stopPaths);
     const makeMapper = (parentPath) => (key, value) => {
         if (deep && isObject(value)) {
@@ -31,10 +24,8 @@ const transform = (input, options = {}) => {
                 value = (0, map_obj_1.default)(value, makeMapper(path));
             }
         }
-        if (!(exclude && has(exclude, key))) {
-            const returnValue = (0, camelCase_1.default)(key, { pascalCase, locale: false });
-            key = returnValue;
-        }
+        const returnValue = (0, camelCase_1.default)(key, { pascalCase, locale: false });
+        key = returnValue;
         return [key, value];
     };
     return (0, map_obj_1.default)(input, makeMapper(undefined));

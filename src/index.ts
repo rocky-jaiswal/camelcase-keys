@@ -4,21 +4,9 @@ import camelCase from './camelCase'
 
 type Options = {
   readonly deep?: boolean
-  readonly exclude?: ReadonlyArray<string | RegExp>
   readonly stopPaths?: readonly string[]
   readonly pascalCase?: boolean
 }
-
-const has = (array: any[], key: any) =>
-  array.some((element) => {
-    if (typeof element === 'string') {
-      return element === key
-    }
-
-    element.lastIndex = 0
-
-    return element.test(key)
-  })
 
 // Reproduces behavior from `map-obj`.
 const isObject = (value: any) =>
@@ -28,12 +16,12 @@ const isObject = (value: any) =>
   !(value instanceof Error) &&
   !(value instanceof Date)
 
-const transform = (input: any, options: any = {}) => {
+const transform = (input: any, options: Options = {}) => {
   if (!isObject(input)) {
     return input
   }
 
-  const { exclude, pascalCase = false, stopPaths, deep = false } = options
+  const { pascalCase = false, stopPaths, deep = false } = options
 
   const stopPathsSet = new Set(stopPaths)
 
@@ -48,11 +36,8 @@ const transform = (input: any, options: any = {}) => {
         }
       }
 
-      if (!(exclude && has(exclude, key))) {
-        const returnValue = camelCase(key, { pascalCase, locale: false })
-
-        key = returnValue
-      }
+      const returnValue = camelCase(key, { pascalCase, locale: false })
+      key = returnValue
 
       return [key, value]
     }
