@@ -57,7 +57,7 @@ function camelCase(input, options = {}) {
     }
     options = {
         pascalCase: false,
-        preserveConsecutiveUppercase: false,
+        preserveConsecutiveUppercase: true,
         ...options
     };
     if (Array.isArray(input)) {

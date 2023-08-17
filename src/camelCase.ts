@@ -71,7 +71,7 @@ export default function camelCase(input: string | string[], options: any = {}) {
 
   options = {
     pascalCase: false,
-    preserveConsecutiveUppercase: false,
+    preserveConsecutiveUppercase: true,
     ...options
   }
 
