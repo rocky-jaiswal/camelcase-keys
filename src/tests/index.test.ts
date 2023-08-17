@@ -64,6 +64,8 @@ describe('camelcaseKeys', () => {
 
   test('test 4', () => {
     expect(camelcaseKeys({ fooBar: 1 })).toEqual({ fooBar: 1 })
+    expect(camelcaseKeys({ fooBarBazBatBoo: 1 })).toEqual({ fooBarBazBatBoo: 1 })
+    expect(camelcaseKeys({ foo_bar_baz_Bat_Boo: 1 })).toEqual({ fooBarBazBatBoo: 1 })
     expect(camelcaseKeys({ FooBar: 1 })).toEqual({ fooBar: 1 })
     expect(camelcaseKeys({ Foo_Bar: 1 })).toEqual({ fooBar: 1 })
     expect(camelcaseKeys({ Foo_bar: 1 })).toEqual({ fooBar: 1 })
