@@ -4,7 +4,6 @@ import camelCase from './camelCase'
 
 type Options = {
   readonly deep?: boolean
-  readonly stopPaths?: readonly string[]
   readonly pascalCase?: boolean
 }
 
@@ -21,19 +20,14 @@ const transform = (input: any, options: Options = {}) => {
     return input
   }
 
-  const { pascalCase = false, stopPaths, deep = false } = options
-
-  const stopPathsSet = new Set(stopPaths)
+  const { pascalCase = false, deep = false } = options
 
   const makeMapper =
     (parentPath: any | undefined) =>
     (key: any, value: any): any => {
       if (deep && isObject(value)) {
         const path = parentPath === undefined ? key : `${parentPath}.${key}`
-
-        if (!stopPathsSet.has(path)) {
-          value = mapObject(value, makeMapper(path))
-        }
+        value = mapObject(value, makeMapper(path))
       }
 
       const returnValue = camelCase(key, { pascalCase, locale: false })

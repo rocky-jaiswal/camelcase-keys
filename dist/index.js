@@ -15,14 +15,11 @@ const transform = (input, options = {}) => {
     if (!isObject(input)) {
         return input;
     }
-    const { pascalCase = false, stopPaths, deep = false } = options;
-    const stopPathsSet = new Set(stopPaths);
+    const { pascalCase = false, deep = false } = options;
     const makeMapper = (parentPath) => (key, value) => {
         if (deep && isObject(value)) {
             const path = parentPath === undefined ? key : `${parentPath}.${key}`;
-            if (!stopPathsSet.has(path)) {
-                value = (0, map_obj_1.default)(value, makeMapper(path));
-            }
+            value = (0, map_obj_1.default)(value, makeMapper(path));
         }
         const returnValue = (0, camelCase_1.default)(key, { pascalCase, locale: false });
         key = returnValue;
